@@ -3,6 +3,7 @@
 An implementation of the Zombie Apocalypse game by Gabriel Kennedy
 
 &nbsp;
+//TODO DESCRIBE ONE THING I THINK IS GREAT
 
 ### Setup
 
@@ -48,12 +49,16 @@ I made the assumption that a Zombie moves one command, and then the next zombie 
 
 &nbsp;
 
-## Next time
+## Edge Cases
 
-I ran a bit low on time during this project, so I only included some core tests to ensure proper functionality, and to give an idea of how I would write tests for this application.
+Written to account for edge cases:
+
+- If a Zombie moves to a tile containing multiple creatures, it should convert all creatures.
+
+- if a Zombie spawns on the same tile as a creature, it should convert the creature.
+
+- if a Zombie with no move sequence spawns on the same tile as a creature, should convert the creature
+
+- Creatures or zombies should not be allowed to be given input positions outside of the allowed N dimension grid
 
 &nbsp;
-
-## Conclusion
-
-Overall, I found this to be a fun, pretty straightforward task.

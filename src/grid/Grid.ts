@@ -65,31 +65,39 @@ export default class Grid {
 		return this.gridDimension;
 	};
 
-	public performGridMoveIteration = (zombie: Zombie): void => {
-		//if no more move sequences for zombies, end recursion
-		if (!this.isZombieMovesRemaining()) return;
+	private getCreatureAtTile = (tile: Tile): Creature => {
+		const entitiesAtTile = this.getEntitiesAtTile(tile);
+		for (const entityAtTile of entitiesAtTile) {
+			if (entityAtTile instanceof Creature) return entityAtTile;
+		}
+	};
 
-		zombie.move(this.gridDimension);
+	public performGridMoveIteration = (zombie: Zombie): void => {
+		//first, convert any creature on the same tile to a zombie, and run this method on the newly created creature
 		const zombiePosition = zombie.getPosition();
 
-		const entitiesAtTile = this.getEntitiesAtTile(zombiePosition);
-
-		for (const entityAtTile of entitiesAtTile) {
-			if (!(entityAtTile instanceof Creature)) continue;
-			//convert same tile creatures to a zombie
+		const creatureAtTile = this.getCreatureAtTile(zombiePosition);
+		if (creatureAtTile) {
 			const convertedZombie = new Zombie(
-				entityAtTile.getPosition(),
+				creatureAtTile.getPosition(),
 				zombie.getMoveSequence(),
 				this.generateZombieIdentifier()
 			);
 			//remove dead creature, push new zombie
-			this.removeEntityFromGrid(entityAtTile);
+			this.removeEntityFromGrid(creatureAtTile);
 			this.addEntityToGrid(convertedZombie);
-
-			console.log(`A new creature was infected!`);
-			//we have a new zombie, this MUST move next
+			//we have a new zombie, this MUST move call on this
+			console.log(
+				`Zombie ${zombie.getIdentifier()} infected creature at (${zombie
+					.getPosition()
+					.getX()}, ${zombie.getPosition().getY()})`
+			);
 			return this.performGridMoveIteration(convertedZombie);
 		}
+		//if no more move sequences for zombies, end recursion
+		if (!this.isZombieMovesRemaining()) return;
+
+		zombie.move(this.gridDimension);
 
 		const index = this.getIndexOfZombie(zombie);
 		//oldest zombie, set passed zombie back to the newest for the next move step
@@ -109,7 +117,7 @@ export default class Grid {
 		}
 		return -1;
 	};
-	
+
 	public removeEntityFromGrid = (passedEntity: Entity): void => {
 		this.entities = this.entities.filter(function (entity) {
 			return entity !== passedEntity;

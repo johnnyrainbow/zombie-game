@@ -12,10 +12,10 @@ export default class ZombieGame {
 		creaturePositions: [number, number][],
 		zombieMoveSequence: string[]
 	) {
-		console.log('Welcome to Zombie Gamse!');
+		console.log('Welcome to Zombie Game!');
 
 		this.grid = new Grid(gridDimension);
-		
+
 		this.instantiateCreatures(
 			zombiePosition,
 			creaturePositions,
@@ -26,7 +26,10 @@ export default class ZombieGame {
 
 	private startGame = (): void => {
 		//pass patient zero zombie in
-		this.grid.performGridMoveIteration(this.grid.getZombies()[0]);
+		// this.convert;
+		this.grid.performGridMoveIteration(
+			this.grid.getZombies()[this.grid.getZombies().length - 1]
+		);
 
 		console.log('Game finished! \n-----');
 		console.log(
@@ -58,7 +61,7 @@ export default class ZombieGame {
 		zombieMoveSequence: string[]
 	): void => {
 		//create the original zombie
-	
+
 		this.validatePositionBounds(zombiePosition);
 
 		const zombie = new Zombie(

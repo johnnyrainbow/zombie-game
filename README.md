@@ -3,7 +3,6 @@
 An implementation of the Zombie Apocalypse game by Gabriel Kennedy
 
 &nbsp;
-//TODO DESCRIBE ONE THING I THINK IS GREAT
 
 ### Setup
 
@@ -37,7 +36,7 @@ The grid class holds the list of generated Entities, and contains methods to mov
 
 ## Retrospect
 
-Initially I wrote Grid#performGridMoveIteration to be iterative, but then upon realising that new zombies would be required to move immediately, it seemed more apt to go with the recursive solution.
+Initially I wrote `Grid#performZombieGridMove` to be iterative, but then upon realising that new zombies would be required to move immediately, it seemed more apt to go with the recursive solution.
 
 I spent some time figuring out why I was getting unexpected output (I overlooked the problem text `the top left corner of the world is (x: 0, y: 0)`, and assumed bottom left was the origin)
 
@@ -62,3 +61,18 @@ Written to account for edge cases:
 - Creatures or zombies should not be allowed to be given input positions outside of the allowed N dimension grid
 
 &nbsp;
+
+## A highlight of my solution
+I think the `Grid#performZombieGridMove` method is the highlight of my solution, as this is where the core 'game loop' occurs. This recursive solution ensures that all the zombies perform their move sequences, while converting creatures, as well as ensuring only the newest zombies move first, without any convoluted loops.
+
+&nbsp;
+
+## What I would've liked to add/finish
+
+Due to time constraints, I only included core tests to ensure proper functionality, edge case testing. 
+
+I would've liked to add comprehensive tests using mocks and spies to the more convoluted methods to ensure they were behaving as expected, such as the `Grid#performZombieGridMove` method, as it has several case scenarios.
+
+Plenty of simple functions could benefit from testing also.
+
+Although I did not test all aspects of the program, hopefully the tests I did implement will give you an idea.

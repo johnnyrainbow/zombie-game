@@ -72,7 +72,7 @@ export default class Grid {
 		}
 	};
 
-	public performGridMoveIteration = (zombie: Zombie): void => {
+	public performZombieGridMove = (zombie: Zombie): void => {
 		//first, convert any creature on the same tile to a zombie, and run this method on the newly created creature
 		const zombiePosition = zombie.getPosition();
 
@@ -92,7 +92,7 @@ export default class Grid {
 					.getPosition()
 					.getX()}, ${zombie.getPosition().getY()})`
 			);
-			return this.performGridMoveIteration(convertedZombie);
+			return this.performZombieGridMove(convertedZombie);
 		}
 		//if no more move sequences for zombies, end recursion
 		if (!this.isZombieMovesRemaining()) return;
@@ -102,11 +102,11 @@ export default class Grid {
 		const index = this.getIndexOfZombie(zombie);
 		//oldest zombie, set passed zombie back to the newest for the next move step
 		if (index === 0)
-			return this.performGridMoveIteration(
+			return this.performZombieGridMove(
 				this.getZombies()[this.getZombies().length - 1]
 			);
 		//continue down the zombie age chain to the next newest
-		return this.performGridMoveIteration(this.getZombies()[index - 1]);
+		return this.performZombieGridMove(this.getZombies()[index - 1]);
 	};
 
 	private getIndexOfZombie = (passedZombie: Zombie): number => {

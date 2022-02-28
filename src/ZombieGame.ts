@@ -27,7 +27,7 @@ export default class ZombieGame {
 	private startGame = (): void => {
 		//pass patient zero zombie in
 		// this.convert;
-		this.grid.performGridMoveIteration(
+		this.grid.performZombieGridMove(
 			this.grid.getZombies()[this.grid.getZombies().length - 1]
 		);
 

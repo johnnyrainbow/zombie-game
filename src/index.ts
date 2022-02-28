@@ -1,4 +1,4 @@
-import ZombieGame from './game/ZombieGame';
+import ZombieGame from './ZombieGame';
 
 const gridDimension: number = 4;
 

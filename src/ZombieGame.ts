@@ -12,9 +12,10 @@ export default class ZombieGame {
 		creaturePositions: [number, number][],
 		zombieMoveSequence: string[]
 	) {
-		console.log('Welcome to Zombie Game!');
+		console.log('Welcome to Zombie Gamse!');
 
 		this.grid = new Grid(gridDimension);
+		
 		this.instantiateCreatures(
 			zombiePosition,
 			creaturePositions,
@@ -41,13 +42,25 @@ export default class ZombieGame {
 	public getGrid = (): Grid => {
 		return this.grid;
 	};
+	private validatePositionBounds = (position: [number, number]) => {
+		if (
+			position[0] > this.grid.getGridDimension() - 1 ||
+			position[1] > this.grid.getGridDimension() - 1
+		)
+			throw new Error('Position exceeds grid bounds');
 
+		if (position[0] < 0 || position[1] < 0)
+			throw new Error('Position has invalid (negative) value');
+	};
 	private instantiateCreatures = (
 		zombiePosition: [number, number],
 		creaturePositions: [number, number][],
 		zombieMoveSequence: string[]
 	): void => {
 		//create the original zombie
+	
+		this.validatePositionBounds(zombiePosition);
+
 		const zombie = new Zombie(
 			new Tile(zombiePosition[0], zombiePosition[1]),
 			zombieMoveSequence,
@@ -59,6 +72,7 @@ export default class ZombieGame {
 		//create and add creatures to grid
 		for (var i = 0; i < creaturePositions.length; i++) {
 			const position = creaturePositions[i];
+			this.validatePositionBounds(position);
 			this.grid.addEntityToGrid(
 				new Creature(new Tile(position[0], position[1]), i)
 			);

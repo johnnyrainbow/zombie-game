@@ -19,7 +19,7 @@ export default class Entity {
 
 	protected moveUp = (gridDimension: number): void => {
 		//handle grid wrap for lower y bounds
-		let newPosition = this.position.getY() - 1;
+		let newPosition: number = this.position.getY() - 1;
 		if (newPosition < 0) newPosition = gridDimension - 1;
 
 		this.position.setY(newPosition);
@@ -27,7 +27,7 @@ export default class Entity {
 
 	protected moveDown = (gridDimension: number): void => {
 		//handle grid wrap for upper y bounds
-		let newPosition = this.position.getY() + 1;
+		let newPosition: number = this.position.getY() + 1;
 		if (newPosition >= gridDimension) newPosition = 0;
 
 		this.position.setY(newPosition);
@@ -35,7 +35,7 @@ export default class Entity {
 
 	protected moveLeft = (gridDimension: number): void => {
 		//handle grid wrap for upper x bounds
-		let newPosition = this.position.getX() - 1;
+		let newPosition: number = this.position.getX() - 1;
 		if (newPosition < 0) newPosition = gridDimension - 1;
 
 		this.position.setX(newPosition);
@@ -43,7 +43,7 @@ export default class Entity {
 
 	protected moveRight = (gridDimension: number): void => {
 		//handle grid wrap for lower x bounds
-		let newPosition = this.position.getX() + 1;
+		let newPosition: number = this.position.getX() + 1;
 		if (newPosition >= gridDimension) newPosition = 0;
 
 		this.position.setX(newPosition);

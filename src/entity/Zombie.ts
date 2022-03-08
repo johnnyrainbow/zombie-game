@@ -4,7 +4,7 @@ import Tile from '../util/Tile';
 export default class Zombie extends Entity {
 	private moveSequence: string[];
 	private sequenceIndex: number = 0;
-	
+
 	constructor(position: Tile, moveSequence: string[] = [], identifier: number) {
 		super(position, identifier);
 		this.moveSequence = moveSequence;
@@ -21,9 +21,9 @@ export default class Zombie extends Entity {
 	public move = (gridDimension: number): void => {
 		if (!this.getHasMovesLeft()) return;
 
-		const move = this.moveSequence[this.sequenceIndex];
-		const oldPositionX = this.getPosition().getX();
-		const oldPositionY = this.getPosition().getY();
+		const move: string = this.moveSequence[this.sequenceIndex];
+		const oldPositionX: number = this.getPosition().getX();
+		const oldPositionY: number = this.getPosition().getY();
 		switch (move.toUpperCase()) {
 			case 'U':
 				this.moveUp(gridDimension);

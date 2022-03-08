@@ -16,8 +16,8 @@ export default class Grid {
 	}
 
 	public getZombiesPositions = (): Tile[] => {
-		const zombies = this.getZombies();
-		const positions = [];
+		const zombies: Zombie[] = this.getZombies();
+		const positions: Tile[] = [];
 		for (const zombie of zombies) {
 			positions.push(zombie.getPosition());
 		}
@@ -25,8 +25,8 @@ export default class Grid {
 	};
 
 	public getCreaturesPositions = (): Tile[] => {
-		const creatures = this.getCreatures();
-		const positions = [];
+		const creatures: Creature[] = this.getCreatures();
+		const positions: Tile[] = [];
 		for (const creature of creatures) {
 			positions.push(creature.getPosition());
 		}
@@ -34,7 +34,7 @@ export default class Grid {
 	};
 
 	public getZombies = (): Zombie[] => {
-		const zombies = [];
+		const zombies: Zombie[] = [];
 		for (const entity of this.entities) {
 			if (entity instanceof Zombie) zombies.push(entity);
 		}
@@ -42,7 +42,7 @@ export default class Grid {
 	};
 
 	private getCreatures = (): Creature[] => {
-		const creatures = [];
+		const creatures: Creature[] = [];
 		for (const entity of this.entities) {
 			if (entity instanceof Creature) creatures.push(entity);
 		}
@@ -54,7 +54,7 @@ export default class Grid {
 	};
 
 	private isZombieMovesRemaining = (): boolean => {
-		const zombies = this.getZombies();
+		const zombies: Zombie[] = this.getZombies();
 		for (const zombie of zombies) {
 			if (zombie.getHasMovesLeft()) return true;
 		}
@@ -65,18 +65,20 @@ export default class Grid {
 		return this.gridDimension;
 	};
 
-	private getCreatureAtTile = (tile: Tile): Creature => {
-		const entitiesAtTile = this.getEntitiesAtTile(tile);
+	private getCreatureAtTile = (tile: Tile): Creature | null => {
+		const entitiesAtTile: Entity[] = this.getEntitiesAtTile(tile);
 		for (const entityAtTile of entitiesAtTile) {
 			if (entityAtTile instanceof Creature) return entityAtTile;
 		}
+		return null;
 	};
 
 	public performZombieGridMove = (zombie: Zombie): void => {
 		//first, convert any creature on the same tile to a zombie, and run this method on the newly created creature
-		const zombiePosition = zombie.getPosition();
+		const zombiePosition: Tile = zombie.getPosition();
 
-		const creatureAtTile = this.getCreatureAtTile(zombiePosition);
+		const creatureAtTile: Creature | null =
+			this.getCreatureAtTile(zombiePosition);
 		if (creatureAtTile) {
 			const convertedZombie = new Zombie(
 				creatureAtTile.getPosition(),
@@ -99,7 +101,7 @@ export default class Grid {
 
 		zombie.move(this.gridDimension);
 
-		const index = this.getIndexOfZombie(zombie);
+		const index: number = this.getIndexOfZombie(zombie);
 		//oldest zombie, set passed zombie back to the newest for the next move step
 		if (index === 0)
 			return this.performZombieGridMove(
@@ -110,9 +112,9 @@ export default class Grid {
 	};
 
 	private getIndexOfZombie = (passedZombie: Zombie): number => {
-		const zombies = this.getZombies();
+		const zombies: Zombie[] = this.getZombies();
 		for (var i = 0; i < zombies.length; i++) {
-			const zombie = zombies[i];
+			const zombie: Zombie = zombies[i];
 			if (zombie.getIdentifier() === passedZombie.getIdentifier()) return i;
 		}
 		return -1;
